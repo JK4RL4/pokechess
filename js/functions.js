@@ -65,7 +65,11 @@ function feedbackPanel (container, button) {
     if (feedback) {
         feedback.remove();
     } 
- 
+    
+    if (button) {
+        button.disabled = true;
+    }
+
     feedback = container.addElement("div", "id= class=feedback-panel");
     feedback.addElement("div", "id= class=feedback-content");
     feedbackButton = feedback.addElement("button", "id= class=feedbackButton", "Volver");

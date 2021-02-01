@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let savedGames = localStorage.getItem("savedGames");
         savedGames = JSON.parse(savedGames);
 
-        game.player1 = createExistingPieces(savedGames[gameId].player1.pieces);
-        game.player2 = createExistingPieces(savedGames[gameId].player2.pieces);
+        game.player1 = createPieces(1, null, savedGames[gameId].player1.pieces);
+        game.player2 = createPieces(2, null, savedGames[gameId].player2.pieces);
         
         document.querySelector("#game-player1-name").innerHTML = savedGames[gameId].player1.name;
         document.querySelector("#game-player2-name").innerHTML = savedGames[gameId].player2.name;
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         createChessboard(savedGames[gameId].tiles);
         putPiecesOnBoard("player1", game.player1);
         putPiecesOnBoard("player2", game.player2);
-        updateTurn(savedGames[gameId].turn);
+        updateTurn(savedGames[gameId].gameTurn);
     } else {
         game.player1 = createPieces(1, gameConfig.player1.pieces);
         game.player2 = createPieces(2, gameConfig.player2.pieces);
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         putPiecesOnBoard("player1", game.player1);
         putPiecesOnBoard("player2", game.player2);
     }
-    console.log(game["player2"]);
+
     document.querySelectorAll(".chess-piece").forEach(element => {
         element.addEventListener("drag", function(e){
             e.preventDefault();
@@ -172,7 +172,7 @@ function createChessboard(tiles){
     })
 }
 
-function createPieces(player, set){
+function createPieces(player, set, existingPieces){
     let pieceRow = [];
     let pieces = {
         "king": {},
@@ -199,68 +199,50 @@ function createPieces(player, set){
         pieceRow = [8, 7];
     }
 
-    pieces.king = new Piece("king", "king", set.king.front, set.king.back, pieceRow[0], 5, 0);
-    pieces.queen = new Piece("queen", "queen", set.queen.front, set.queen.back, pieceRow[0], 4, 0);
-    pieces.rook1 = new Piece("rook1", "rook", set.rook.front, set.rook.back, pieceRow[0], 1, 0);
-    pieces.rook2 = new Piece("rook2", "rook", set.rook.front, set.rook.back, pieceRow[0], 8, 0);
-    pieces.bishop1 = new Piece("bishop1", "bishop", set.bishop.front, set.bishop.back, pieceRow[0], 3, 0);
-    pieces.bishop2 = new Piece("bishop2", "bishop", set.bishop.front, set.bishop.back, pieceRow[0], 6, 0);
-    pieces.knight1 = new Piece("knight1", "knight", set.knight.front, set.knight.back, pieceRow[0], 2, 0);
-    pieces.knight2 = new Piece("knight2", "knight", set.knight.front, set.knight.back, pieceRow[0], 7, 0);
-    pieces.pawn1 = new Piece("pawn1", "pawn", set.pawn.front, set.pawn.back, pieceRow[1], 1, 0);
-    pieces.pawn2 = new Piece("pawn2", "pawn", set.pawn.front, set.pawn.back, pieceRow[1], 2, 0);
-    pieces.pawn3 = new Piece("pawn3", "pawn", set.pawn.front, set.pawn.back, pieceRow[1], 3, 0);
-    pieces.pawn4 = new Piece("pawn4", "pawn", set.pawn.front, set.pawn.back, pieceRow[1], 4, 0);
-    pieces.pawn5 = new Piece("pawn5", "pawn", set.pawn.front, set.pawn.back, pieceRow[1], 5, 0);
-    pieces.pawn6 = new Piece("pawn6", "pawn", set.pawn.front, set.pawn.back, pieceRow[1], 6, 0);
-    pieces.pawn7 = new Piece("pawn7", "pawn", set.pawn.front, set.pawn.back, pieceRow[1], 7, 0);
-    pieces.pawn8 = new Piece("pawn8", "pawn", set.pawn.front, set.pawn.back, pieceRow[1], 8, 0);
-    
-    return pieces;
-}
-
-function createExistingPieces(existingPieces){
-    let pieces = {
-        "king": {},
-        "queen": {},
-        "rook1": {},
-        "rook2": {},
-        "bishop1": {},
-        "bishop2": {},
-        "knight1": {},
-        "knight2": {},
-        "pawn1": {},
-        "pawn2": {},
-        "pawn3": {},
-        "pawn4": {},
-        "pawn5": {},
-        "pawn6": {},
-        "pawn7": {},
-        "pawn8": {},
+    if (set) {
+        pieces.king = new Piece("king", "king", set.king.front, set.king.back, pieceRow[0], 5, 0);
+        pieces.queen = new Piece("queen", "queen", set.queen.front, set.queen.back, pieceRow[0], 4, 0);
+        pieces.rook1 = new Piece("rook1", "rook", set.rook.front, set.rook.back, pieceRow[0], 1, 0);
+        pieces.rook2 = new Piece("rook2", "rook", set.rook.front, set.rook.back, pieceRow[0], 8, 0);
+        pieces.bishop1 = new Piece("bishop1", "bishop", set.bishop.front, set.bishop.back, pieceRow[0], 3, 0);
+        pieces.bishop2 = new Piece("bishop2", "bishop", set.bishop.front, set.bishop.back, pieceRow[0], 6, 0);
+        pieces.knight1 = new Piece("knight1", "knight", set.knight.front, set.knight.back, pieceRow[0], 2, 0);
+        pieces.knight2 = new Piece("knight2", "knight", set.knight.front, set.knight.back, pieceRow[0], 7, 0);
+        pieces.pawn1 = new Piece("pawn1", "pawn", set.pawn.front, set.pawn.back, pieceRow[1], 1, 0);
+        pieces.pawn2 = new Piece("pawn2", "pawn", set.pawn.front, set.pawn.back, pieceRow[1], 2, 0);
+        pieces.pawn3 = new Piece("pawn3", "pawn", set.pawn.front, set.pawn.back, pieceRow[1], 3, 0);
+        pieces.pawn4 = new Piece("pawn4", "pawn", set.pawn.front, set.pawn.back, pieceRow[1], 4, 0);
+        pieces.pawn5 = new Piece("pawn5", "pawn", set.pawn.front, set.pawn.back, pieceRow[1], 5, 0);
+        pieces.pawn6 = new Piece("pawn6", "pawn", set.pawn.front, set.pawn.back, pieceRow[1], 6, 0);
+        pieces.pawn7 = new Piece("pawn7", "pawn", set.pawn.front, set.pawn.back, pieceRow[1], 7, 0);
+        pieces.pawn8 = new Piece("pawn8", "pawn", set.pawn.front, set.pawn.back, pieceRow[1], 8, 0);
     }
 
-    pieces.king = new Piece("king", "king", existingPieces.king.front, existingPieces.king.back, existingPieces.king.row, existingPieces.king.column, existingPieces.king.moves);
-    pieces.queen = new Piece("queen", "queen", existingPieces.queen.front, existingPieces.queen.back, existingPieces.queen.row, existingPieces.queen.column, existingPieces.queen.moves);
-    pieces.rook1 = new Piece("rook1", "rook", existingPieces.rook1.front, existingPieces.rook1.back, existingPieces.rook1.row, existingPieces.rook1.column, existingPieces.rook1.moves);
-    pieces.rook2 = new Piece("rook2", "rook", existingPieces.rook2.front, existingPieces.rook2.back, existingPieces.rook2.row, existingPieces.rook2.column, existingPieces.rook2.moves);
-    pieces.bishop1 = new Piece("bishop1", "bishop", existingPieces.bishop1.front, existingPieces.bishop1.back, existingPieces.bishop1.row, existingPieces.bishop1.column, existingPieces.bishop1.moves);
-    pieces.bishop2 = new Piece("bishop2", "bishop", existingPieces.bishop2.front, existingPieces.bishop2.back, existingPieces.bishop2.row, existingPieces.bishop2.column, existingPieces.bishop2.moves);
-    pieces.knight1 = new Piece("knight1", "knight", existingPieces.knight1.front, existingPieces.knight1.back, existingPieces.knight1.row, existingPieces.knight1.column, existingPieces.knight1.moves);
-    pieces.knight2 = new Piece("knight2", "knight", existingPieces.knight2.front, existingPieces.knight2.back, existingPieces.knight2.row, existingPieces.knight2.column, existingPieces.knight2.moves);
-    pieces.pawn1 = new Piece("pawn1", existingPieces.pawn1.type, existingPieces.pawn1.front, existingPieces.pawn1.back, existingPieces.pawn1.row, existingPieces.pawn1.column, existingPieces.pawn1.moves);
-    pieces.pawn2 = new Piece("pawn2", existingPieces.pawn2.type, existingPieces.pawn2.front, existingPieces.pawn2.back, existingPieces.pawn2.row, existingPieces.pawn2.column, existingPieces.pawn2.moves);
-    pieces.pawn3 = new Piece("pawn3", existingPieces.pawn3.type, existingPieces.pawn3.front, existingPieces.pawn3.back, existingPieces.pawn3row, existingPieces.pawn3column, existingPieces.pawn3.moves);
-    pieces.pawn4 = new Piece("pawn4", existingPieces.pawn4.type, existingPieces.pawn4.front, existingPieces.pawn4.back, existingPieces.pawn4.row, existingPieces.pawn4.column, existingPieces.pawn4.moves);
-    pieces.pawn5 = new Piece("pawn5", existingPieces.pawn5.type, existingPieces.pawn5.front, existingPieces.pawn5.back, existingPieces.pawn5.row, existingPieces.pawn5.column, existingPieces.pawn5.moves);
-    pieces.pawn6 = new Piece("pawn6", existingPieces.pawn6.type, existingPieces.pawn6.front, existingPieces.pawn6.back, existingPieces.pawn6.row, existingPieces.pawn6.column, existingPieces.pawn6.moves);
-    pieces.pawn7 = new Piece("pawn7", existingPieces.pawn7.type, existingPieces.pawn7.front, existingPieces.pawn7.back, existingPieces.pawn7.row, existingPieces.pawn7.column, existingPieces.pawn7.moves);
-    pieces.pawn8 = new Piece("pawn8", existingPieces.pawn8.type, existingPieces.pawn8.front, existingPieces.pawn8.back, existingPieces.pawn8.row, existingPieces.pawn8.column, existingPieces.pawn8.moves);
+    if (existingPieces) {
+        pieces.king = new Piece("king", "king", existingPieces.king.front, existingPieces.king.back, existingPieces.king.row, existingPieces.king.column, existingPieces.king.moves);
+        pieces.queen = new Piece("queen", "queen", existingPieces.queen.front, existingPieces.queen.back, existingPieces.queen.row, existingPieces.queen.column, existingPieces.queen.moves);
+        pieces.rook1 = new Piece("rook1", "rook", existingPieces.rook1.front, existingPieces.rook1.back, existingPieces.rook1.row, existingPieces.rook1.column, existingPieces.rook1.moves);
+        pieces.rook2 = new Piece("rook2", "rook", existingPieces.rook2.front, existingPieces.rook2.back, existingPieces.rook2.row, existingPieces.rook2.column, existingPieces.rook2.moves);
+        pieces.bishop1 = new Piece("bishop1", "bishop", existingPieces.bishop1.front, existingPieces.bishop1.back, existingPieces.bishop1.row, existingPieces.bishop1.column, existingPieces.bishop1.moves);
+        pieces.bishop2 = new Piece("bishop2", "bishop", existingPieces.bishop2.front, existingPieces.bishop2.back, existingPieces.bishop2.row, existingPieces.bishop2.column, existingPieces.bishop2.moves);
+        pieces.knight1 = new Piece("knight1", "knight", existingPieces.knight1.front, existingPieces.knight1.back, existingPieces.knight1.row, existingPieces.knight1.column, existingPieces.knight1.moves);
+        pieces.knight2 = new Piece("knight2", "knight", existingPieces.knight2.front, existingPieces.knight2.back, existingPieces.knight2.row, existingPieces.knight2.column, existingPieces.knight2.moves);
+        pieces.pawn1 = new Piece("pawn1", existingPieces.pawn1.type, existingPieces.pawn1.front, existingPieces.pawn1.back, existingPieces.pawn1.row, existingPieces.pawn1.column, existingPieces.pawn1.moves);
+        pieces.pawn2 = new Piece("pawn2", existingPieces.pawn2.type, existingPieces.pawn2.front, existingPieces.pawn2.back, existingPieces.pawn2.row, existingPieces.pawn2.column, existingPieces.pawn2.moves);
+        pieces.pawn3 = new Piece("pawn3", existingPieces.pawn3.type, existingPieces.pawn3.front, existingPieces.pawn3.back, existingPieces.pawn3row, existingPieces.pawn3column, existingPieces.pawn3.moves);
+        pieces.pawn4 = new Piece("pawn4", existingPieces.pawn4.type, existingPieces.pawn4.front, existingPieces.pawn4.back, existingPieces.pawn4.row, existingPieces.pawn4.column, existingPieces.pawn4.moves);
+        pieces.pawn5 = new Piece("pawn5", existingPieces.pawn5.type, existingPieces.pawn5.front, existingPieces.pawn5.back, existingPieces.pawn5.row, existingPieces.pawn5.column, existingPieces.pawn5.moves);
+        pieces.pawn6 = new Piece("pawn6", existingPieces.pawn6.type, existingPieces.pawn6.front, existingPieces.pawn6.back, existingPieces.pawn6.row, existingPieces.pawn6.column, existingPieces.pawn6.moves);
+        pieces.pawn7 = new Piece("pawn7", existingPieces.pawn7.type, existingPieces.pawn7.front, existingPieces.pawn7.back, existingPieces.pawn7.row, existingPieces.pawn7.column, existingPieces.pawn7.moves);
+        pieces.pawn8 = new Piece("pawn8", existingPieces.pawn8.type, existingPieces.pawn8.front, existingPieces.pawn8.back, existingPieces.pawn8.row, existingPieces.pawn8.column, existingPieces.pawn8.moves); 
+    }
+
     
     return pieces;
 }
 
 function updateTurn (turn) {
-    if (turn == "player2") {
+    if (turn === "player2") {
         document.querySelectorAll(".game-turn").forEach(element => {
             element.classList.toggle("hidden");
         })
@@ -510,16 +492,6 @@ function checkTiles(player, piece, moves)  {
         moves = verticalCollision(player, piece, moves);
         moves = horizontalCollision(player, piece, moves);
     }
-
-    // if (piece.type === "queen") {
-    //     queenMoves = saveQueenDiagonal(piece, moves);
-    //     moves = queenMoves[0];
-    //     queenDiagonal = queenMoves[1];
-    //     queenDiagonal = diagonalCollision(player, piece, queenDiagonal);
-    //     moves = verticalCollision(player, piece, moves);
-    //     moves = horizontalCollision(player, piece, moves);
-    //     moves = moves.concat(queenDiagonal);
-    // }
     
     return moves;
 }
@@ -548,26 +520,6 @@ function pawnDiagonal(pawnMoves, row, column) {
     }
     return pawnMoves;
 }
-
-// function saveQueenDiagonal (piece, moves) {
-//     let queenMoves = [];
-//     let queenDiagonal = [];
-//     let row = String(piece.row);
-//     let column = String(piece.column);
-
-//     moves.forEach(element => {
-//         let moveRow = element.substring(0, 1);
-//         let moveColumn = element.substring(1);
-
-//         if (row === moveRow || column === moveColumn) {
-//             queenMoves.push(element);
-//         } else {
-//             queenDiagonal.push(element);
-//         }
-//     })
-
-//     return [queenMoves, queenDiagonal];
-// }
 
 function clearAllyAttacks (player) {
     document.querySelectorAll("." + player + "-piece").forEach(element => {

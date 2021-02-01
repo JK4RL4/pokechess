@@ -150,10 +150,42 @@ document.addEventListener('DOMContentLoaded', () => {
             let playerPanel = document.querySelector("#" + player + "-config");
     
             let newProfile = {
-                playerName: document.querySelector("#" + player + "-name").value,
-                playerAvatar: document.querySelector("#" + player + "-avatar").value,
-                playerSet: setSelection.options[setSelection.selectedIndex].value
+                "playerName": document.querySelector("#" + player + "-name").value,
+                "playerAvatar": document.querySelector("#" + player + "-avatar").value,
+                "playerSet": setSelection.options[setSelection.selectedIndex].value,
+                "pieces": {
+                    "king": {
+                        "front": "",
+                        "back": ""
+                    },
+                    "queen": {
+                        "front": "",
+                        "back": ""
+                    },
+                    "bishop": {
+                        "front": "",
+                        "back": ""
+                    },
+                    "rook": {
+                        "front": "",
+                        "back": ""
+                    },
+                    "knight": {
+                        "front": "",
+                        "back": ""
+                    },
+                    "pawn": {
+                        "front": "",
+                        "back": ""
+                    }
+                }
             }
+
+            for (piece in gameConfig[player]["pieces"]) {
+                newProfile.pieces[piece].front = gameConfig[player]["pieces"][piece].front;
+                newProfile.pieces[piece].back = gameConfig[player]["pieces"][piece].back;
+            }
+
             let localProfiles = localStorage.getItem("playerProfiles");
             let profileExists;
     
@@ -165,7 +197,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 profileExists = -1;
             }
             
-            button.disabled = true;
             if (profileExists >= 0) {
                 feedback = feedbackPanel(playerPanel, button);
                 let feedbackContent = document.querySelector(".feedback-content");
@@ -207,7 +238,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let playerPanel = document.querySelector("#" + player + "-config");
             let localProfiles = localStorage.getItem("playerProfiles");
     
-            button.disabled = true;
             if(localProfiles) {
                 let feedback = feedbackPanel(playerPanel, button);
                 let feedbackContent = document.querySelector(".feedback-content");
@@ -240,10 +270,15 @@ document.addEventListener('DOMContentLoaded', () => {
     
                     let avatarSearch = document.querySelector("#" + player + "-avatar-finder");
                     avatarSearch.click();
-    
-                    let setSearch = document.querySelector("#" + player + "-set-select");
-                    var event = new Event('change');
-                    setSearch.dispatchEvent(event);
+
+                    document.querySelectorAll("." + player + "-set .set-piece .set-piece-image").forEach(element => {
+                        let pieceType = element.id.substring(element.id.indexOf("-") + 1);
+                        
+                        element.src = localProfiles[selectedProfileIndex].pieces[pieceType].front;
+
+                        gameConfig[player]["pieces"][pieceType].front = localProfiles[selectedProfileIndex].pieces[pieceType].front;
+                        gameConfig[player]["pieces"][pieceType].back = localProfiles[selectedProfileIndex].pieces[pieceType].back;
+                    })
     
                     button.disabled = false;
                     feedback.remove();
@@ -331,7 +366,6 @@ document.addEventListener('DOMContentLoaded', () => {
             })
     
             if (!playerCheck) {
-                startButton.disabled = true;
                 let container = document.querySelector(".tile-selection");
                 feedbackPanel(container, startButton);
                 let feedbackContent = document.querySelector(".feedback-content");
@@ -339,7 +373,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }   
         } else {
             tileCheck = false;
-            startButton.disabled = true;
             let container = document.querySelector(".tile-selection");
             feedbackPanel(container, startButton);
             let feedbackContent = document.querySelector(".feedback-content");
@@ -349,7 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (playerCheck && tileCheck) {
             gameConfig = JSON.stringify(gameConfig);
             localStorage.setItem("gameConfig", gameConfig);
-            window.location.href = "./pokechess-game.html";
+            window.location.href = "./game.html";
         }
     })
 
@@ -409,17 +442,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector(".mobile-nav-link").addEventListener("click", function(){
         document.querySelector(".mobile-nav-dropdown").style.display = "block";
     })
-
-    // document.querySelector(".mobile-nav-dropdown").addEventListener("mouseout", function(){
-    //     document.querySelector(".mobile-nav-dropdown").style.display = "none";
-    // })
     
     document.querySelector("#credits-button").addEventListener("click", function (){
         let button = this;
         let container = document.querySelector(".container");
         let credits = feedbackPanel(container, button);
         let feedbackContent = document.querySelector(".feedback-content");
-        button.disabled = true;
+
         feedbackContent.addElement("p", "id= class=credits-title", "Realizado por:");
         feedbackContent.addElement("p", "id= class=credits-p", "Jon Karla Somoza");
         feedbackContent.addElement("img", "id= class=credits-img", "./img/bbk_logo.png");

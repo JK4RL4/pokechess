@@ -1,5 +1,6 @@
-// Credits button
 document.addEventListener('DOMContentLoaded', () => {
+
+    // Credits button
     document.querySelector("#credits-button").addEventListener("click", function (){
         let button = this;
         let container = document.querySelector(".container");
@@ -13,13 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
         credits.addElement("img", "id= class=credits-background", "./img/credits_background.png");
     })
 
+    // Load game button
     document.querySelector("#load-game").addEventListener("click", function (){
         let button = this;
         let container = document.querySelector(".container");
         let savedGames = localStorage.getItem("savedGames");
         
-        button.disabled = true;
-
         if(savedGames) {
             let feedback = feedbackPanel(container, button);
             let feedbackContent = document.querySelector(".feedback-content");
@@ -45,8 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
             feedbackButton.addEventListener("click", function () {
                 let selectedGame = document.querySelector(".feedback-profile-selected").innerHTML;
                 let selectedGameIndex = savedGames.searchInArrayOfObjects("gameName", selectedGame);
-                window.location.href = "./pokechess-game.html?game=" + selectedGameIndex;
+                window.location.href = "./game.html?game=" + selectedGameIndex;
             })
+
         } else {
             feedbackPanel(container, button);
             let feedbackContent = document.querySelector(".feedback-content");
