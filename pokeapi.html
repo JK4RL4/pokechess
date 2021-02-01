@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .pokemon-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.pokemon {
+    width: 20%;
+    padding: 1rem;
+}
+
+.pokemon p {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.pokemon img {
+    width: 100%;
+    height: auto;
+}
+</style>
+
+<body>
+    <div class="container">
+        <div class="select">
+            <select name="select" id="select-pokemon">
+                <option value="default">Selecciona un tipo de pokemon</option>
+            </select>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./js/functions.js"></script>
+
+    <script>
+        getApiData("https://pokeapi.co/api/v2/type/").then(result => {
+            result.results.forEach(element => {
+                let select = document.querySelector("#select-pokemon");
+                let option = document.createElement("option");
+                option.text = element.name;
+                select.add(option);
+            })
+            addSelectListener(result.results);
+        });
+
+        pokemon = [];
+        i = 0;
+        getApiData("https://pokeapi.co/api/v2/pokemon/?limit=1118").then(result => {
+            result.results.forEach(element => {
+                pokemon[i] = element.name;
+                i++;
+            })
+        });
+
+        function addSelectListener(pokemonTypes) {
+            document.querySelector("#select-pokemon").addEventListener("change", function () {
+                let select = document.querySelector("#select-pokemon");
+                let selectedType = select.options[select.selectedIndex].text;
+                let container = document.querySelector(".container");
+                if (document.querySelector(".pokemon-box")) {
+                    document.querySelector(".pokemon-box").remove();
+                }
+
+                let pokemonBox = container.addElement("div", "id= class=pokemon-box", null);
+                let position = pokemonTypes.searchInArrayOfObjects("name", selectedType);
+                
+                getApiData(pokemonTypes[position].url).then(result => {
+                    result.pokemon.forEach(element => {
+                        let pokemon = pokemonBox.addElement("div", "id= class=pokemon");
+                        pokemon.addElement("p", "id= class=", element.pokemon.name);
+                        getApiData(element.pokemon.url).then(result => {
+                            pokemon.addElement("img", "id= class=", result.sprites.front_default);
+                            pokemon.addElement("img", "id= class=", result.sprites.back_default);
+                        })
+                    })
+                })
+            })
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokéchess</title>
+</head>
+<link rel="stylesheet" href="./css/style.css">
+
+<body class="game-body">
+    <div class="header game-header">
+        <img class="header-logo" src="./img/pokechess_logo.png">
+        <div class="nav">
+            <ul>
+                <li><a href="./index.html">inicio</a></li>
+                <li><a href="./pokechess-config.html">configuración</a></li>
+                <li><button id="save-button" class="credits-button">guardar</a></li>
+                <li><button id="credits-button" class="credits-button">créditos</button></li>
+            </ul>
+        </div>
+        <div class="mobile-nav">
+            <button class="mobile-nav-link">menu</button>
+            <div class="mobile-nav-dropdown">
+                <ul>
+                    <li><a href="./index.html">inicio</a></li>
+                    <li><a href="./pokechess-config.html">configuración</a></li>
+                    <li><button id="save-button" class="credits-button">guardar</a></li>
+                    <li><button id="credits-button-mobile" class="credits-button">créditos</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="game-container" class="container">
+        <div id="game-player1-panel" class="game-player-panel">
+            <div class="game-panel-profile">
+                <img id="game-player1-avatar" class="game-player-avatar" src="">
+                <p id="game-player1-name" class="game-player-name"></p>
+            </div>
+            <div id="player1-pieces" class="player-pieces">
+                <img class="graveyarg-img" src="./img/graveyard.png">
+                <div id="player1-graveyard" class="player-graveyard"></div>
+            </div>
+        </div>
+        <div class="game-board-container">
+            <p id="game-player1-turn" class="game-turn"></p>
+            <p id="game-player2-turn" class="game-turn hidden"></p>
+            <div class="chessboard-container">
+                <div class="chessboard">
+                    <div id="tile-11" class="chess-tile white"></div>
+                    <div id="tile-12" class="chess-tile black"></div>
+                    <div id="tile-13" class="chess-tile white"></div>
+                    <div id="tile-14" class="chess-tile black"></div>
+                    <div id="tile-15" class="chess-tile white"></div>
+                    <div id="tile-16" class="chess-tile black"></div>
+                    <div id="tile-17" class="chess-tile white"></div>
+                    <div id="tile-18" class="chess-tile black"></div>
+
+                    <div id="tile-21" class="chess-tile black"></div>
+                    <div id="tile-22" class="chess-tile white"></div>
+                    <div id="tile-23" class="chess-tile black"></div>
+                    <div id="tile-24" class="chess-tile white"></div>
+                    <div id="tile-25" class="chess-tile black"></div>
+                    <div id="tile-26" class="chess-tile white"></div>
+                    <div id="tile-27" class="chess-tile black"></div>
+                    <div id="tile-28" class="chess-tile white"></div>
+
+                    <div id="tile-31" class="chess-tile white"></div>
+                    <div id="tile-32" class="chess-tile black"></div>
+                    <div id="tile-33" class="chess-tile white"></div>
+                    <div id="tile-34" class="chess-tile black"></div>
+                    <div id="tile-35" class="chess-tile white"></div>
+                    <div id="tile-36" class="chess-tile black"></div>
+                    <div id="tile-37" class="chess-tile white"></div>
+                    <div id="tile-38" class="chess-tile black"></div>
+
+                    <div id="tile-41" class="chess-tile black"></div>
+                    <div id="tile-42" class="chess-tile white"></div>
+                    <div id="tile-43" class="chess-tile black"></div>
+                    <div id="tile-44" class="chess-tile white"></div>
+                    <div id="tile-45" class="chess-tile black"></div>
+                    <div id="tile-46" class="chess-tile white"></div>
+                    <div id="tile-47" class="chess-tile black"></div>
+                    <div id="tile-48" class="chess-tile white"></div>
+
+                    <div id="tile-51" class="chess-tile white"></div>
+                    <div id="tile-52" class="chess-tile black"></div>
+                    <div id="tile-53" class="chess-tile white"></div>
+                    <div id="tile-54" class="chess-tile black"></div>
+                    <div id="tile-55" class="chess-tile white"></div>
+                    <div id="tile-56" class="chess-tile black"></div>
+                    <div id="tile-57" class="chess-tile white"></div>
+                    <div id="tile-58" class="chess-tile black"></div>
+
+                    <div id="tile-61" class="chess-tile black"></div>
+                    <div id="tile-62" class="chess-tile white"></div>
+                    <div id="tile-63" class="chess-tile black"></div>
+                    <div id="tile-64" class="chess-tile white"></div>
+                    <div id="tile-65" class="chess-tile black"></div>
+                    <div id="tile-66" class="chess-tile white"></div>
+                    <div id="tile-67" class="chess-tile black"></div>
+                    <div id="tile-68" class="chess-tile white"></div>
+
+                    <div id="tile-71" class="chess-tile white"></div>
+                    <div id="tile-72" class="chess-tile black"></div>
+                    <div id="tile-73" class="chess-tile white"></div>
+                    <div id="tile-74" class="chess-tile black"></div>
+                    <div id="tile-75" class="chess-tile white"></div>
+                    <div id="tile-76" class="chess-tile black"></div>
+                    <div id="tile-77" class="chess-tile white"></div>
+                    <div id="tile-78" class="chess-tile black"></div>
+
+                    <div id="tile-81" class="chess-tile black"></div>
+                    <div id="tile-82" class="chess-tile white"></div>
+                    <div id="tile-83" class="chess-tile black"></div>
+                    <div id="tile-84" class="chess-tile white"></div>
+                    <div id="tile-85" class="chess-tile black"></div>
+                    <div id="tile-86" class="chess-tile white"></div>
+                    <div id="tile-87" class="chess-tile black"></div>
+                    <div id="tile-88" class="chess-tile white"></div>            
+                </div>
+            </div>
+        </div>
+        <div id="game-player2-panel" class="game-player-panel">
+            <div class="game-panel-profile player2-profile">
+                <img id="game-player2-avatar" class="game-player-avatar" src="">
+                <p id="game-player2-name" class="game-player-name"></p>
+            </div>
+            <div id="player2-pieces" class="player-pieces">
+                <img class="graveyarg-img" src="./img/graveyard.png">
+                <div id="player2-graveyard" class="player-graveyard"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./js/functions.js"></script>
+    <script src="./js/variables.js"></script>
+    <script src="./js/game.js"></script>
+</body>
+
+</html>

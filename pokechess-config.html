@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokéchess</title>
+</head>
+<link rel="stylesheet" href="./css/style.css">
+
+<body>
+    <div class="header">
+        <img class="header-logo" src="./img/pokechess_logo.png">
+        <div class="nav">
+            <ul>
+                <li><a href="./index.html">inicio</a></li>
+                <li><a class="nav-active" href="">configuración</a></li>
+                <li><button id="credits-button" class="credits-button">créditos</button></li>
+            </ul>
+        </div>
+        <div class="mobile-nav">
+            <button class="mobile-nav-link">menu</button>
+            <div class="mobile-nav-dropdown">
+                <ul>
+                    <li><a href="./index.html">inicio</a></li>
+                    <li><a href="./pokechess-config.html">configuración</a></li>
+                    <li><button id="credits-button-mobile" class="credits-button">créditos</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="game-config" class="container">
+        <div id="player1-config" class="player-config">
+            <form>
+                <p class="player-title">Jugador 1:</p>
+                <div class="player-name">
+                    <label for="player1-name" class="player-input-label"><span class="bold">Nombre:</span></label>
+                    <input type="text" id="player1-name" class="player-input" name="player1-name" autocomplete="off" placeholder="Jugador 1">
+                </div>
+                <div class="player-avatar">
+                    <label for="player1-avatar" class="player-input-label"><span class="bold">Avatar:</span></label>
+                    <div id="player1-avatar-autocomplete" class="player-avatar-autocomplete">
+                        <input type="text" id="player1-avatar" class="player-input" name="player1-avatar" autocomplete="off" placeholder="Avatar Jugador 1">
+                    </div>
+                    <button id="player1-avatar-finder" class="player-avatar-finder">Buscar</button>
+                    <div class="player-avatar-img-box">
+                        <img id="player1-avatar-img" class="player-avatar-img" src="">
+                        <p id="player1-avatar-error" class="avatar-error hidden">Imagen no disponible</p>
+                        <img class="player-avatar-img-reflex" src="./img/avatar_reflex.png">
+                    </div>
+                </div>
+                <div id="player1-set">
+                    <select name="select" id="player1-set-select" class="set-select">
+                        <option value="default">Selecciona un set de piezas</option>
+                        <option value="electric">Set Eléctrico</option>
+                        <option value="ice">Set Hielo</option>
+                        <option value="fire">Set Fuego</option>
+                        <option value="water">Set Agua</option>
+                        <option value="psychic">Set Psíquico</option>
+                        <option value="dragon">Set Dragones</option>
+                    </select>
+                    <div class="set-pieces player1-set">
+                        <div class="set-piece">
+                            <div class="set-piece-type type-rook"></div> 
+                            <img id="player1-rook" class="set-piece-image img-rook" src="">
+                            <button id="player1-rook-change" class="set-change-button"></button>
+                        </div>
+                        <div class="set-piece">
+                            <div class="set-piece-type type-knight"></div>  
+                            <img id="player1-knight" class="set-piece-image img-knight" src="">
+                            <button id="player1-knight-change" class="set-change-button"></button>
+                        </div>
+                        <div class="set-piece bishop">
+                            <div class="set-piece-type type-bishop"></div> 
+                            <img id="player1-bishop" class="set-piece-image img-bishop" src="">
+                            <button id="player1-bishop-change" class="set-change-button"></button>
+                        </div>
+                        <div class="set-piece">
+                            <div class="set-piece-type type-king"></div>
+                            <img id="player1-king" class="set-piece-image img-king" src="">
+                            <button id="player1-king-change" class="set-change-button"></button>
+                        </div>
+                        <div class="set-piece">
+                            <div class="set-piece-type type-queen"></div> 
+                            <img id="player1-queen" class="set-piece-image img-queen" src="">
+                            <button id="player1-queen-change" class="set-change-button"></button>
+                        </div>
+                        <div class="set-piece">
+                            <div class="set-piece-type type-pawn"></div>  
+                            <img id="player1-pawn" class="set-piece-image img-pawn" src="">
+                            <button id="player1-pawn-change" class="set-change-button"></button>
+                        </div>
+                    </div>
+                    <div class="player-buttons">
+                        <button id="player1-save" class="player-button player-save">Guardar Perfil</button>
+                        <button id="player1-load" class="player-button player-load">Cargar Perfil</button>
+                        <button id="player1-ok" class="player-button player-ok">Listo</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="player2-config" class="player-config">
+            <form>
+                <p class="player-title">Jugador 2:</p>
+                <div class="player-name">
+                    <label for="player2-name" class="player-input-label"><span class="bold">Nombre:</span></label>
+                    <input type="text" id="player2-name" class="player-input" name="player2-name" autocomplete="off" placeholder="Jugador 1">
+                </div>
+                <div class="player-avatar">
+                    <label for="player2-avatar" class="player-input-label"><span class="bold">Avatar:</span></label>
+                    <div id="player2-avatar-autocomplete" class="player-avatar-autocomplete">
+                        <input type="text" id="player2-avatar" class="player-input" name="player2-avatar" autocomplete="off" placeholder="Avatar Jugador 1">
+                    </div>
+                    <button id="player2-avatar-finder" class="player-avatar-finder">Buscar</button>
+                    <div class="player-avatar-img-box">
+                        <img id="player2-avatar-img" class="player-avatar-img" src="">
+                        <p id="player2-avatar-error" class="avatar-error hidden">Imagen no disponible</p>
+                        <img class="player-avatar-img-reflex" src="./img/avatar_reflex.png">
+                    </div>
+                </div>
+                <div id="player2-set">
+                    <select name="select" id="player2-set-select" class="set-select">
+                        <option value="default">Selecciona un set de piezas</option>
+                        <option value="electric">Set Eléctrico</option>
+                        <option value="ice">Set Hielo</option>
+                        <option value="fire">Set Fuego</option>
+                        <option value="water">Set Agua</option>
+                        <option value="psychic">Set Psíquico</option>
+                        <option value="dragon">Set Dragones</option>
+                    </select>
+                    <div class="set-pieces player2-set">
+                        <div class="set-piece">
+                            <div class="set-piece-type type-rook"></div> 
+                            <img id="player2-rook" class="set-piece-image img-rook" src="">
+                            <button id="player2-rook-change" class="set-change-button"></button>
+                        </div>
+                        <div class="set-piece">
+                            <div class="set-piece-type type-knight"></div>  
+                            <img id="player2-knight" class="set-piece-image img-knight" src="">
+                            <button id="player2-knight-change" class="set-change-button"></button>
+                        </div>
+                        <div class="set-piece bishop">
+                            <div class="set-piece-type type-bishop"></div> 
+                            <img id="player2-bishop" class="set-piece-image img-bishop" src="">
+                            <button id="player2-bishop-change" class="set-change-button"></button>
+                        </div>
+                        <div class="set-piece">
+                            <div class="set-piece-type type-king"></div>
+                            <img id="player2-king" class="set-piece-image img-king" src="">
+                            <button id="player2-king-change" class="set-change-button"></button>
+                        </div>
+                        <div class="set-piece">
+                            <div class="set-piece-type type-queen"></div> 
+                            <img id="player2-queen" class="set-piece-image img-queen" src="">
+                            <button id="player2-queen-change" class="set-change-button"></button>
+                        </div>
+                        <div class="set-piece">
+                            <div class="set-piece-type type-pawn"></div>  
+                            <img id="player2-pawn" class="set-piece-image img-pawn" src="">
+                            <button id="player2-pawn-change" class="set-change-button"></button>
+                        </div>
+                    </div>
+                    <div class="player-buttons">
+                        <button id="player2-save" class="player-button player-save">Guardar Perfil</button>
+                        <button id="player2-load" class="player-button player-load">Cargar Perfil</button>
+                        <button id="player2-ok" class="player-button player-ok">Listo</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="tile-selection">
+            <p>Selecciona 2 casillas de terreno para la partida:</p>
+            <form class="tile-form">
+                <div class="tile-checkbox">
+                    <input type="checkbox" id="tile1" class="tile-check" name="tile1" value="tile_cement">
+                    <img src="./img/tiles/tile_cement.png">
+                </div>
+                <div class="tile-checkbox">
+                    <input type="checkbox" id="tile2" class="tile-check" name="tile1" value="tile_grass">
+                    <img src="./img/tiles/tile_grass.png">
+                </div>
+                <div class="tile-checkbox">
+                    <input type="checkbox" id="tile3" class="tile-check" name="tile1" value="tile_mound">
+                    <img src="./img/tiles/tile_mound.png">
+                </div>
+                <div class="tile-checkbox">
+                    <input type="checkbox" id="tile3" class="tile-check" name="tile1" value="tile_mud">
+                    <img src="./img/tiles/tile_mud.png">
+                </div>
+                <div class="tile-checkbox">
+                    <input type="checkbox" id="tile3" class="tile-check" name="tile1" value="tile_water">
+                    <img src="./img/tiles/tile_water.png">
+                </div>
+                <div class="tile-checkbox">
+                    <input type="checkbox" id="tile3" class="tile-check" name="tile1" value="tile_wood">
+                    <img src="./img/tiles/tile_wood.png">
+                </div>
+            </form>
+            <div class="start-game">
+                <button id="start-game-button">Jugar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./js/functions.js"></script>
+    <script src="./js/variables.js"></script>
+    <script src="./js/gameConfig.js"></script>
+</body>
+
+</html>
