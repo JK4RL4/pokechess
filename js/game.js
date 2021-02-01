@@ -118,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 "tile2": gameConfig.tiles.tile2
             }
         }
+        console.log(currentGame);
 
         if(savedGames) {
             savedGames = JSON.parse(savedGames);
@@ -229,7 +230,7 @@ function createPieces(player, set, existingPieces){
         pieces.knight2 = new Piece("knight2", "knight", existingPieces.knight2.front, existingPieces.knight2.back, existingPieces.knight2.row, existingPieces.knight2.column, existingPieces.knight2.moves);
         pieces.pawn1 = new Piece("pawn1", existingPieces.pawn1.type, existingPieces.pawn1.front, existingPieces.pawn1.back, existingPieces.pawn1.row, existingPieces.pawn1.column, existingPieces.pawn1.moves);
         pieces.pawn2 = new Piece("pawn2", existingPieces.pawn2.type, existingPieces.pawn2.front, existingPieces.pawn2.back, existingPieces.pawn2.row, existingPieces.pawn2.column, existingPieces.pawn2.moves);
-        pieces.pawn3 = new Piece("pawn3", existingPieces.pawn3.type, existingPieces.pawn3.front, existingPieces.pawn3.back, existingPieces.pawn3row, existingPieces.pawn3column, existingPieces.pawn3.moves);
+        pieces.pawn3 = new Piece("pawn3", existingPieces.pawn3.type, existingPieces.pawn3.front, existingPieces.pawn3.back, existingPieces.pawn3.row, existingPieces.pawn3.column, existingPieces.pawn3.moves);
         pieces.pawn4 = new Piece("pawn4", existingPieces.pawn4.type, existingPieces.pawn4.front, existingPieces.pawn4.back, existingPieces.pawn4.row, existingPieces.pawn4.column, existingPieces.pawn4.moves);
         pieces.pawn5 = new Piece("pawn5", existingPieces.pawn5.type, existingPieces.pawn5.front, existingPieces.pawn5.back, existingPieces.pawn5.row, existingPieces.pawn5.column, existingPieces.pawn5.moves);
         pieces.pawn6 = new Piece("pawn6", existingPieces.pawn6.type, existingPieces.pawn6.front, existingPieces.pawn6.back, existingPieces.pawn6.row, existingPieces.pawn6.column, existingPieces.pawn6.moves);
@@ -237,7 +238,6 @@ function createPieces(player, set, existingPieces){
         pieces.pawn8 = new Piece("pawn8", existingPieces.pawn8.type, existingPieces.pawn8.front, existingPieces.pawn8.back, existingPieces.pawn8.row, existingPieces.pawn8.column, existingPieces.pawn8.moves); 
     }
 
-    
     return pieces;
 }
 
